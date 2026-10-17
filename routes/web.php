@@ -22,8 +22,11 @@ Route::middleware('auth')->group(function () {
     })->name('dashboard');
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::get('/dashboard', fn () => view('admin.dashboard', ['title' => 'Dashboard Admin']))->name('dashboard');
-        // route admin dari anggota lain ditambah di sini
+        Route::get('/dashboard', fn () => view('admin.dashboard', ['title' => 'Dashboard Admin']))
+        ->name('dashboard');
+
+    Route::resource('layanan', \App\Http\Controllers\LayananController::class)
+        ->except(['show']);
     });
 
     Route::middleware('role:pelanggan')->prefix('pelanggan')->name('pelanggan.')->group(function () {
