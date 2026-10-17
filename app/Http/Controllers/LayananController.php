@@ -2,19 +2,39 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Layanan;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
 class LayananController extends Controller
 {
+    private function dataLayanan()
+    {
+        return [
+            [
+                'id' => 1,
+                'nama_layanan' => 'Cuci Reguler',
+                'deskripsi' => 'Layanan cuci pakaian reguler.',
+                'harga' => 7000,
+            ],
+            [
+                'id' => 2,
+                'nama_layanan' => 'Cuci Express',
+                'deskripsi' => 'Layanan cuci pakaian lebih cepat.',
+                'harga' => 12000,
+            ],
+            [
+                'id' => 3,
+                'nama_layanan' => 'Setrika',
+                'deskripsi' => 'Layanan menyetrika pakaian.',
+                'harga' => 5000,
+            ],
+        ];
+    }
+
     public function index()
     {
-        $layanans = Layanan::latest()->get();
-
         return view('admin.layanan.index', [
             'title' => 'Data Layanan Laundry',
-            'layanans' => $layanans,
+            'layanans' => $this->dataLayanan(),
         ]);
     }
 
@@ -27,64 +47,43 @@ class LayananController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'nama_layanan' => 'required|string|max:100|unique:layanans,nama_layanan',
+        $request->validate([
+            'nama_layanan' => 'required|string|max:100',
             'deskripsi' => 'nullable|string',
             'harga' => 'required|numeric|min:0',
-        ], [
-            'nama_layanan.required' => 'Nama layanan wajib diisi.',
-            'nama_layanan.unique' => 'Nama layanan sudah tersedia.',
-            'nama_layanan.max' => 'Nama layanan maksimal 100 karakter.',
-            'harga.required' => 'Harga wajib diisi.',
-            'harga.numeric' => 'Harga harus berupa angka.',
-            'harga.min' => 'Harga tidak boleh negatif.',
         ]);
 
-        Layanan::create($data);
-
         return redirect()->route('admin.layanan.index')
-            ->with('success', 'Layanan berhasil ditambahkan.');
+            ->with('success', 'Simulasi tambah layanan berhasil. Data belum disimpan.');
     }
 
-    public function edit(Layanan $layanan)
+    public function edit($id)
     {
+        $layanan = collect($this->dataLayanan())->firstWhere('id', (int) $id);
+
+        abort_if(!$layanan, 404);
+
         return view('admin.layanan.edit', [
             'title' => 'Edit Layanan',
             'layanan' => $layanan,
         ]);
     }
 
-    public function update(Request $request, Layanan $layanan)
+    public function update(Request $request, $id)
     {
-        $data = $request->validate([
-            'nama_layanan' => [
-                'required',
-                'string',
-                'max:100',
-                Rule::unique('layanans', 'nama_layanan')->ignore($layanan->id),
-            ],
+        $request->validate([
+            'nama_layanan' => 'required|string|max:100',
             'deskripsi' => 'nullable|string',
             'harga' => 'required|numeric|min:0',
-        ], [
-            'nama_layanan.required' => 'Nama layanan wajib diisi.',
-            'nama_layanan.unique' => 'Nama layanan sudah digunakan.',
-            'nama_layanan.max' => 'Nama layanan maksimal 100 karakter.',
-            'harga.required' => 'Harga wajib diisi.',
-            'harga.numeric' => 'Harga harus berupa angka.',
-            'harga.min' => 'Harga tidak boleh negatif.',
         ]);
 
-        $layanan->update($data);
-
         return redirect()->route('admin.layanan.index')
-            ->with('success', 'Layanan berhasil diperbarui.');
+            ->with('success', 'Simulasi edit layanan berhasil. Data belum disimpan.');
     }
 
-    public function destroy(Layanan $layanan)
+    public function destroy($id)
     {
-        $layanan->delete();
-
         return redirect()->route('admin.layanan.index')
-            ->with('success', 'Layanan berhasil dihapus.');
+            ->with('success', 'Simulasi hapus layanan berhasil. Data belum dihapus.');
     }
 }

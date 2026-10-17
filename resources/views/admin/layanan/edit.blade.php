@@ -10,7 +10,7 @@
 
 <div class="card border-0 shadow-sm">
     <div class="card-body p-4">
-        <form action="{{ route('admin.layanan.update', $layanan) }}" method="POST">
+        <form action="{{ route('admin.layanan.update', $layanan['id']) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -20,7 +20,7 @@
                        name="nama_layanan"
                        id="nama_layanan"
                        class="form-control @error('nama_layanan') is-invalid @enderror"
-                       value="{{ old('nama_layanan', $layanan->nama_layanan) }}"
+                       value="{{ old('nama_layanan', $layanan['nama_layanan']) }}"
                        required>
                 @error('nama_layanan')
                     <div class="invalid-feedback">{{ $message }}</div>
@@ -32,7 +32,7 @@
                 <textarea name="deskripsi"
                           id="deskripsi"
                           class="form-control @error('deskripsi') is-invalid @enderror"
-                          rows="3">{{ old('deskripsi', $layanan->deskripsi) }}</textarea>
+                          rows="3">{{ old('deskripsi', $layanan['deskripsi']) }}</textarea>
                 @error('deskripsi')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -44,7 +44,7 @@
                        name="harga"
                        id="harga"
                        class="form-control @error('harga') is-invalid @enderror"
-                       value="{{ old('harga', $layanan->harga) }}"
+                       value="{{ old('harga', $layanan['harga']) }}"
                        min="0"
                        step="0.01"
                        required>
