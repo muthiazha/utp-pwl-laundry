@@ -93,15 +93,6 @@
                 </thead>
                 <tbody>
                     @forelse($pesanans as $index => $pesanan)
-                        @php
-                            $badgeColor = match($pesanan->status) {
-                                'menunggu' => 'warning',
-                                'diproses' => 'info',
-                                'selesai'  => 'success',
-                                'diambil'  => 'secondary',
-                                default    => 'dark',
-                            };
-                        @endphp
                         <tr>
                             <td class="ps-4 text-muted small">{{ $index + 1 }}</td>
                             <td>
@@ -116,26 +107,31 @@
                             <td class="small text-muted">{{ $pesanan->catatan ?: '—' }}</td>
                             <td class="small text-muted">{{ $pesanan->created_at->format('d/m/Y') }}</td>
                             <td>
-                                <span class="badge bg-{{ $badgeColor }}">{{ $pesanan->labelStatus() }}</span>
+                                <span class="badge bg-{{ $pesanan->badgeColor() }}">{{ $pesanan->labelStatus() }}</span>
                             </td>
                             <td class="pe-4 text-center">
-                                <form action="{{ route('admin.pesanan.updateStatus', $pesanan) }}"
-                                      method="POST" class="d-flex gap-1 justify-content-center">
-                                    @csrf
-                                    @method('PATCH')
-                                    <select name="status" class="form-select form-select-sm"
-                                            style="width:auto; min-width:115px">
-                                        @foreach($daftarStatus as $val => $label)
-                                            <option value="{{ $val }}"
-                                                    {{ $pesanan->status === $val ? 'selected' : '' }}>
-                                                {{ $label }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    <button type="submit" class="btn btn-sm btn-primary" title="Simpan">
-                                        <i class="bi bi-check-lg"></i>
-                                    </button>
-                                </form>
+                                <div class="d-flex gap-1 justify-content-center align-items-center">
+                                    <a href="{{ route('admin.pesanan.show', $pesanan) }}" class="btn btn-sm btn-outline-info" title="Lihat Detail Pesanan">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <form action="{{ route('admin.pesanan.updateStatus', $pesanan) }}"
+                                          method="POST" class="d-flex gap-1">
+                                        @csrf
+                                        @method('PATCH')
+                                        <select name="status" class="form-select form-select-sm"
+                                                style="width:auto; min-width:115px">
+                                            @foreach($daftarStatus as $val => $label)
+                                                <option value="{{ $val }}"
+                                                        {{ $pesanan->status === $val ? 'selected' : '' }}>
+                                                    {{ $label }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <button type="submit" class="btn btn-sm btn-primary" title="Simpan">
+                                            <i class="bi bi-check-lg"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @empty

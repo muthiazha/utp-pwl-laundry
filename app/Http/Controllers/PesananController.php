@@ -154,6 +154,42 @@ class PesananController extends Controller
     }
 
     /**
+     * Tampilkan detail transaksi dan status tracking pesanan.
+     */
+    public function show(Pesanan $pesanan): View
+    {
+        $this->authorizeOwner($pesanan);
+        $pesanan->load(['layanan', 'user']);
+
+        return view('pelanggan.pesanan.show', [
+            'title' => 'Detail Transaksi '.$pesanan->kode_pesanan,
+            'pesanan' => $pesanan,
+        ]);
+    }
+
+    /**
+     * Tampilkan riwayat transaksi yang sudah selesai atau diambil.
+     */
+    public function riwayat(): View
+    {
+        $pesanans = Pesanan::with('layanan')
+            ->where('user_id', auth()->id())
+            ->whereIn('status', ['selesai', 'diambil'])
+            ->latest()
+            ->get();
+
+        $totalSelesai = $pesanans->count();
+        $totalPengeluaran = (float) $pesanans->sum('total_biaya');
+
+        return view('pelanggan.pesanan.riwayat', [
+            'title' => 'Riwayat Transaksi',
+            'pesanans' => $pesanans,
+            'totalSelesai' => $totalSelesai,
+            'totalPengeluaran' => $totalPengeluaran,
+        ]);
+    }
+
+    /**
      * Pastikan pesanan milik user yang sedang login.
      */
     private function authorizeOwner(Pesanan $pesanan): void

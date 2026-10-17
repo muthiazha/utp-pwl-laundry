@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminPelangganController;
 use App\Http\Controllers\AdminPesananController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LayananController;
+use App\Http\Controllers\PelangganDashboardController;
 use App\Http\Controllers\PesananController;
 use Illuminate\Support\Facades\Route;
 
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
 
         // Kelola Pesanan
         Route::get('/pesanan', [AdminPesananController::class, 'index'])->name('pesanan.index');
+        Route::get('/pesanan/{pesanan}', [AdminPesananController::class, 'show'])->name('pesanan.show');
         Route::patch('/pesanan/{pesanan}/status', [AdminPesananController::class, 'updateStatus'])->name('pesanan.updateStatus');
 
         // Kelola Pelanggan
@@ -41,9 +43,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware('role:pelanggan')->prefix('pelanggan')->name('pelanggan.')->group(function () {
-        Route::get('/dashboard', fn () => view('pelanggan.dashboard', ['title' => 'Dashboard Pelanggan']))->name('dashboard');
+        Route::get('/dashboard', [PelangganDashboardController::class, 'index'])->name('dashboard');
 
-        Route::resource('pesanan', PesananController::class)->except(['show']);
-        // route pelanggan dari anggota lain ditambah di sini
+        Route::get('/riwayat', [PesananController::class, 'riwayat'])->name('pesanan.riwayat');
+        Route::resource('pesanan', PesananController::class);
     });
 });
