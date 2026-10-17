@@ -35,10 +35,10 @@ Proyek ini dikembangkan secara kolaboratif menggunakan *Git & GitHub Pull Reques
 
 | Peran | Anggota | Fokus Tugas & Kontribusi |
 | :--- | :--- | :--- |
-| **Orang 1** | **Muthia (`muthiazha`)** | **Autentikasi, Role, & Halaman Error**<br>• Registrasi & login multi-role (Admin & Pelanggan)<br>• Middleware proteksi hak akses (`role:admin`, `role:pelanggan`)<br>• Dashboard awal Admin & template layout dasar<br>• Desain halaman error kustom (403, 404, 419, 500) |
-| **Orang 2** | **Kharisma Jaka Harum (`KharismaJaka`)** | **CRUD Master Data Layanan Laundry**<br>• Manajemen data paket layanan (Cuci Komplit, Express, Setrika, Bed Cover)<br>• Form tambah, edit, dan hapus layanan beserta penetapan tarif per kg<br>• Validasi input data layanan dan integrasi database |
-| **Orang 3** | **Rheal (`Reyal12`)** | **Fitur Pemesanan Cucian Pelanggan**<br>• Fitur tambah pesanan laundry oleh pelanggan dengan kalkulasi biaya otomatis<br>• Form input berat cucian (kg), pemilihan layanan, dan catatan khusus<br>• Validasi batas minimal/maksimal berat dan error handling form |
-| **Orang 4** | **Status Laundry, UI/UX, & Integrasi** | **Status Laundry, Detail Transaksi, UI, & Integrasi**<br>• Fitur live visual stepper tracking status cucian (4 tahapan progres)<br>• Halaman Detail Transaksi & Struk/Nota digital print-ready (`window.print`)<br>• Halaman Riwayat Transaksi Selesai & arsip pengeluaran pelanggan<br>• Penyeragaman UI (desain bertema *Eco-Fresh Mint*, topbar navigasi, hero banner)<br>• Integrasi antarmuka dashboard pelanggan, pengujian, dan error handling |
+| **Orang 1** | **Muthia Zhafira (2467051025)** | **Autentikasi, Role, & Halaman Error**<br>• Registrasi & login multi-role (Admin & Pelanggan)<br>• Middleware proteksi hak akses (`role:admin`, `role:pelanggan`)<br>• Dashboard awal Admin & template layout dasar<br>• Desain halaman error kustom (403, 404, 419, 500) |
+| **Orang 2** | **Kharisma Jaka Harum (2417051068)** | **CRUD Master Data Layanan Laundry**<br>• Manajemen data paket layanan (Cuci Komplit, Express, Setrika, Bed Cover)<br>• Form tambah, edit, dan hapus layanan beserta penetapan tarif per kg<br>• Validasi input data layanan dan integrasi database |
+| **Orang 3** | **Rheal Iftiqar Rozak (2417051029)** | **Fitur Pemesanan Cucian Pelanggan**<br>• Fitur tambah pesanan laundry oleh pelanggan dengan kalkulasi biaya otomatis<br>• Form input berat cucian (kg), pemilihan layanan, dan catatan khusus<br>• Validasi batas minimal/maksimal berat dan error handling form |
+| **Orang 4** | **Alyssa Putri Hermawan (2417051051)** | **Status Laundry, Detail Transaksi, UI, & Integrasi**<br>• Fitur live visual stepper tracking status cucian (4 tahapan progres)<br>• Halaman Detail Transaksi & Struk/Nota digital print-ready (`window.print`)<br>• Halaman Riwayat Transaksi Selesai & arsip pengeluaran pelanggan<br>• Penyeragaman UI (desain bertema *Eco-Fresh Mint*, topbar navigasi, hero banner)<br>• Integrasi antarmuka dashboard pelanggan, pengujian, dan error handling |
 
 ---
 
@@ -198,6 +198,6 @@ php artisan test
 ---
 
 <p align="center">
-  Dibuat dengan ❤️ oleh Kelompok UTP Pemrograman Web Lanjut.<br>
+  Dibuat oleh Kelompok 1 UTP Pemrograman Web Lanjut.<br>
   <strong>Cuciin Laundry & Care © 2026</strong>
 </p>
