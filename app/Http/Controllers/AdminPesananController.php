@@ -55,7 +55,21 @@ class AdminPesananController extends Controller
 
         $pesanan->update(['status' => $data['status']]);
 
-        return redirect()->route('admin.pesanan.index')
+        return redirect()->back()
             ->with('success', "Status pesanan #{$pesanan->id} berhasil diubah menjadi \"{$pesanan->labelStatus()}\".");
+    }
+
+    /**
+     * Tampilkan detail pesanan untuk admin.
+     */
+    public function show(Pesanan $pesanan): View
+    {
+        $pesanan->load(['user', 'layanan']);
+
+        return view('admin.pesanan.show', [
+            'title' => 'Detail Pesanan '.$pesanan->kode_pesanan,
+            'pesanan' => $pesanan,
+            'daftarStatus' => Pesanan::daftarStatus(),
+        ]);
     }
 }
